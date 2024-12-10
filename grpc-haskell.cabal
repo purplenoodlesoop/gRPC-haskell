@@ -10,10 +10,6 @@ copyright:           Copyright 2016 Awake Networks
 category:            Network
 build-type:          Simple
 cabal-version:       >=1.10
-extra-source-files:  tests/*.hs
-                     tests/*.proto
-                     tests/*.py
-                     tests/*.sh
 
 Flag Debug
   Description: Adds debug logging.
@@ -28,7 +24,7 @@ flag with-examples
 library
   build-depends:
       base >=4.8 && <5.0
-    , bytestring >= 0.10 && <0.12
+    , bytestring >= 0.10 && <=0.12
     , proto3-suite >=0.4.3
     , proto3-wire >=1.2.2
     , grpc-haskell-core >=0.6.0
@@ -55,7 +51,7 @@ executable hellos-server
     build-depends:
       base >=4.8 && <5.0
       , async
-      , bytestring >= 0.10 && <0.12
+      , bytestring >= 0.10 && <=0.12
       , containers >=0.5 && <0.7
       , grpc-haskell
       , grpc-haskell-core >=0.2.0
@@ -75,7 +71,7 @@ executable hellos-client
     build-depends:
       base >=4.8 && <5.0
       , async
-      , bytestring >= 0.10 && <0.12
+      , bytestring >= 0.10 && <=0.12
       , containers >=0.5 && <0.7
       , grpc-haskell
       , grpc-haskell-core >=0.2.0
@@ -95,7 +91,7 @@ executable echo-server
     build-depends:
       base >=4.8 && <5.0
       , async
-      , bytestring >= 0.10 && <0.12
+      , bytestring >= 0.10 && <=0.12
       , containers >=0.5 && <0.7
       , deepseq
       , grpc-haskell
@@ -120,7 +116,7 @@ executable arithmetic-server
     build-depends:
       base >=4.8 && <5.0
       , async
-      , bytestring >= 0.10 && <0.12
+      , bytestring >= 0.10 && <=0.12
       , containers >=0.5 && <0.7
       , deepseq
       , grpc-haskell
@@ -144,7 +140,7 @@ executable arithmetic-client
     build-depends:
       base >=4.8 && <5.0
       , async
-      , bytestring >= 0.10 && <0.12
+      , bytestring >= 0.10 && <=0.12
       , containers >=0.5 && <0.7
       , deepseq
       , grpc-haskell
@@ -168,7 +164,7 @@ executable echo-client
     build-depends:
       base >=4.8 && <5.0
       , async
-      , bytestring >= 0.10 && <0.12
+      , bytestring >= 0.10 && <=0.12
       , containers >=0.5 && <0.7
       , deepseq
       , grpc-haskell
@@ -188,38 +184,6 @@ executable echo-client
   hs-source-dirs:   examples/echo/echo-hs
   main-is:          EchoClient.hs
 
-test-suite tests
-  build-depends:
-      base >=4.8 && <5.0
-    , bytestring >= 0.10 && <0.12
-    , unix
-    , time
-    , async
-    , tasty >= 0.11
-    , tasty-hunit >= 0.9
-    , tasty-quickcheck >= 0.8.4
-    , containers >=0.5 && <0.7
-    , managed >= 1.0.0 && < 1.1
-    , pipes >=4.1 && <=4.4
-    , proto3-suite
-    , transformers
-    , safe
-    , clock >=0.6.0 && <0.9
-    , turtle >= 1.2.0
-    , text
-    , QuickCheck >=2.10 && <3.0
-  other-modules:
-    GeneratedTests
-  default-language:     Haskell2010
-  ghc-options:          -Wall -Werror -fwarn-incomplete-patterns -fno-warn-unused-do-bind -g -threaded -rtsopts
-  hs-source-dirs:       tests
-  main-is:              Properties.hs
-  type:                 exitcode-stdio-1.0
-  default-extensions:   CPP
-  if flag(debug)
-    CPP-Options: -DDEBUG
-    CC-Options:  -DGRPC_HASKELL_DEBUG
-
 benchmark bench
   type: exitcode-stdio-1.0
   build-depends:
@@ -228,7 +192,7 @@ benchmark bench
     , async ==2.1.*
     , criterion ==1.1.*
     , proto3-suite
-    , bytestring >= 0.10 && <0.12
+    , bytestring >= 0.10 && <=0.12
     , random >=1.0.0
   hs-source-dirs: bench
   main-is: Bench.hs
