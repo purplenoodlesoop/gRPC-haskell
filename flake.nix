@@ -23,10 +23,7 @@
         haskellPackages = super.haskellPackages.override {
           overrides =
             hSelf: hSuper:
-            let
-              call = name: hSelf.callPackage ./${packages.${name}}/${genName};
-            in
-            builtins.mapAttrs call {
+            builtins.mapAttrs (name: hSelf.callPackage ./${packages.${name}}/${genName}) {
               ${coreName} = {
                 gpr = self.grpc;
               };
@@ -38,25 +35,18 @@
     with core-flake;
     lib.evalFlake {
       overlays = [ overlay ];
-
       perSystem =
         { pkgs, lib, ... }:
         {
           imports = with nixosModules; [
             tasks
           ];
-
           flake = with pkgs; {
-            shell = [
-              haskellPackages.cabal2nix
-            ];
-
+            shell = [ haskellPackages.cabal2nix ];
             packages = builtins.mapAttrs (name: _: haskellPackages.${name}) packages;
           };
-
           tasks.gen = lib.map (name: "cd ${name}; cabal2nix . > ${genName} ") (builtins.attrValues packages);
         };
-
       topLevel.overlays.default = overlay;
     };
 }
